@@ -1,41 +1,15 @@
-<!-- <style>
-  /* Supaya halaman tidak ikut scroll */
-  .content-wrapper {
-    height: calc(100vh - 57px);
-    /* tinggi layar dikurangi navbar */
-    overflow: hidden;
-  }
-
-  /* Scroll hanya di card body */
-  .card-body {
-    max-height: 500px;
-    overflow-y: auto;
-  }
-
-  /* Scrollbar halus */
-  .card-body::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .card-body::-webkit-scrollbar-thumb {
-    background: #bbb;
-    border-radius: 10px;
-  }
-
-
-</style> -->
 
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Products</h1>
+          <h1 class="m-0">Categories</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Products</li>
+            <li class="breadcrumb-item active">Categories</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -48,7 +22,7 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Products</h3>
+          <h3 class="card-title">Categories</h3>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -61,11 +35,11 @@
         </div>
         <div class="card-body">
           <div class="mb-3">
-            <a href="dashboard.php?page=addproducts" class="btn btn-primary">Add Product</a>
-            <a href="pages/products/print.php?
+            <a href="dashboard.php?page=addcategory" class="btn btn-primary">Add Category</a>
+            <a href="pages/category/print.php?
             <?php
-              if (isset($_GET['product_name'])) {
-              echo 'product_name=' . $_GET['product_name'] . '&';
+              if (isset($_GET['category_name'])) {
+              echo 'category_name=' . $_GET['category_name'] . '&';
               }
               if (isset($_GET['category_id'])) {
               echo 'category_id=' . $_GET['category_id'];
@@ -102,30 +76,16 @@
             unset($_SESSION['type']);
           }
           ?>
-          <!-- FILTER NAMA + CATEGORY -->
+          <!-- FILTER NAMA CATEGORY -->
           <form action="" method="GET" class="mb-3">
-            <input type="hidden" name="page" value="products">
+            <input type="hidden" name="page" value="category">
             <div class="row">
               <!-- Filter Nama -->
               <div class="col-md-5">
-                <input class="form-control" type="text" name="product_name" placeholder="Product Name"
-                  value="<?php echo isset($_GET['product_name']) ? $_GET['product_name'] : ''; ?>">
+                <input class="form-control" type="text" name="category_name" placeholder="category Name"
+                  value="<?php echo isset($_GET['category_name']) ? $_GET['category_name'] : ''; ?>">
               </div>
 
-              <!-- Filter Kategori -->
-              <div class="col-md-5">
-                <select class="form-control" name="category_id">
-                  <option value="">All Category</option>
-                  <?php
-                  $sql = "SELECT * FROM categories";
-                  $execute = mysqli_query($koneksi, $sql);
-                  while ($categories = mysqli_fetch_array($execute)) {
-                    $selected = (isset($_GET['category_id']) && $_GET['category_id'] == $categories['category_id']) ? 'selected' : '';
-                    echo "<option value='{$categories['category_id']}' {$selected}>{$categories['category_name']}</option>";
-                  }
-                  ?>
-                </select>
-              </div>
 
               <!-- Tombol Submit -->
               <div class="col-md-2">
@@ -139,44 +99,32 @@
             <thead>
               <tr>
                 <th style="width: 10px">No</th>
-                <th>Code</th>
-                <th>Product Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>stock</th>
+                <th>Category ID</th>
+                <th>Category Name</th>
                 <th style="width: 40px">Action</th>
               </tr>
             </thead>
             <tbody>
               <?php
               $no = 1;
-              $sql = "SELECT * FROM products
-              INNER JOIN categories ON products.category_id = categories.category_id ";
+              $sql = "SELECT * FROM categories";
               //Filter Nama
-              if (isset($_GET['product_name'])) {
-                $product_name = $_GET['product_name'];
-                $sql .= "WHERE product_name LIKE '%$product_name%'";
-              }
-              //Filter Category
-              if (isset($_GET['category_id']) && $_GET['category_id'] != '') {
-                $categories = (int)$_GET['category_id'];
-                $sql .= "AND products.category_id = '$categories'";
+              if (isset($_GET['category_name'])) {
+                $category_name = $_GET['category_name'];
+                $sql .= " WHERE category_name LIKE '%$category_name%'";
               }
 
               $query = mysqli_query($koneksi, $sql);
-              while ($products = mysqli_fetch_array($query)) {
+              while ($category = mysqli_fetch_array($query)) {
               ?>
                 <tr>
                   <td><?php echo $no; ?></td>
-                  <td><?php echo $products['product_code']; ?></td>
-                  <td><?php echo $products['product_name']; ?></td>
-                  <td><?php echo $products['category_name']; ?></td>
-                  <td><?php echo "Rp " . $products['price']; ?></td>
-                  <td><?php echo $products['stock']; ?></td>
+                  <td><?php echo $category['category_id']; ?></td>
+                  <td><?php echo $category['category_name']; ?></td>
                   <td>
                     <div class="d-flex">
-                      <a href="dashboard.php?page=edit_product&product_id=<?php echo $products['product_id']; ?>" class="btn btn-sm btn-success mr-2">Edit</a>
-                      <a href="pages/products/action.php?act=delete&product_id=<?php echo $products['product_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure, Delete data?')">Delete</a>
+                      <a href="dashboard.php?page=editcategory&category_id=<?php echo $category['category_id']; ?>" class="btn btn-sm btn-success mr-2">Edit</a>
+                      <a href="pages/category/action.php?act=delete&category_id=<?php echo $category['category_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure, Delete data?')">Delete</a>
                     </div>
                   </td>
                 </tr>

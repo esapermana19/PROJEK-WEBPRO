@@ -21,6 +21,18 @@ if (isset($_GET['page'])) {
         case "addcustomer":
             include "pages/customers/create.php";
             break;
+        case "edit_customer":
+            include "pages/customers/edit.php";
+            break;
+        case "categories":
+            include "pages/categories/view.php";
+            break;
+        case "addcategory":
+            include "pages/categories/create.php";
+            break;
+        case "editcategory":
+            include "pages/categories/edit.php";
+            break;
     }
 } else {
     include "pages/home.php";

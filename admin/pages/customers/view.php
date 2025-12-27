@@ -114,8 +114,8 @@
                   <td><?php echo $customers['address']; ?></td>
                   <td>
                     <div class="d-flex">
-                      <a href="dashboard.php?page=edit_product&product_id=<?php echo $products['product_id'];?>" class="btn btn-sm btn-success mr-2">Edit</a>
-                      <a href="pages/products/action.php?act=delete&product_id=<?php echo $products['product_id'];?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure, Delete data?')">Delete</a>
+                      <a href="dashboard.php?page=edit_customer&customer_id=<?php echo $customers['customer_id'];?>" class="btn btn-sm btn-success mr-2">Edit</a>
+                      <a href="pages/customers/action.php?act=delete&customer_id=<?php echo $customers['customer_id'];?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure, Delete data?')">Delete</a>
                     </div>
                   </td>
                 </tr>

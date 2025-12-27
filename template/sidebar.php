@@ -79,9 +79,9 @@
                               </a>
                           </li>
                           <li class="nav-item">
-                              <a href="dashboard.php?page=supliers" class="nav-link">
+                              <a href="dashboard.php?page=categories" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>Suplier</p>
+                                  <p>Categories</p>
                               </a>
                           </li>
                       </ul>
